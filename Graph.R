@@ -8,12 +8,12 @@
 
 #Set the working directory (you will need to edit this to be the directory where you have stored the data files for this Chapter)
 
-setwd("C:\\Users\\Owner\\Dropbox\\¹Ú»ç°úÁ¤\\Á¶±³\\2019-2\\Åë°è(ÇÐºÎ)_ÇÃ¸³·¯´×\\2. ¼ö¾÷¼³°è\\05. ÀÚ·á °³¹ß\\01. 2-5ÁÖÂ÷\\08. IN-CLASS\\°­ÀÇÈ°¿ëÀÚ·á\\4Àå")
+setwd("C:\\Users\\Owner\\Dropbox\\?Ú»???ï¿½ï¿½\\ï¿½ï¿½??\\2019-2\\????(?Ðº?)_?Ã¸?????\\2. ????????\\05. ?Ú·? ????\\01. 2-5????\\08. IN-CLASS\\????È°???Ú·?\\4??")
 
 ######Initiate packages
 
 #If you don't have ggplot2 installed then use:
-install.packages(c("ggplot2", "plyr"))
+install.packages(c("ggplot2", "plyr", "reshape"))
 
 
 #Initiate ggplot2
@@ -25,24 +25,25 @@ library(plyr)
 #--------Scatterplots----------
 
 examData <- read.delim("Exam Anxiety.dat",  header = TRUE)
+str(examData)
 names(examData)
 
 #Simple scatter
 scatter <- ggplot(examData, aes(Anxiety, Exam, colour = Gender))
 scatter + geom_point()
 
-#Simple scatter / labs(x=¡°xÃà ÀÌ¸§¡±, y=¡°yÃàÀÌ¸§¡°)
+#Simple scatter / labs(x=??x?? ?Ì¸???, y=??y???Ì¸???)
 scatter <- ggplot(examData, aes(Anxiety, Exam))
 scatter + geom_point() + labs(x = "Exam Anxiety", y = "Exam Performance %") 
 
-#Simple scatter with smooth/ labs(title = "±×¸²Á¦¸ñ")
+#Simple scatter with smooth/ labs(title = "?×¸?ï¿½ï¿½??")
 scatter <- ggplot(examData, aes(Anxiety, Exam))
 scatter + geom_point() + geom_smooth() + labs(x = "Exam Anxiety", y = "Exam Performance %", title = "labs(title)")
 
 
 #Simple scatter with regression line(red)
 scatter <- ggplot(examData, aes(Anxiety, Exam))
-scatter + geom_point() + geom_smooth(method = "lm", colour = "Red", se = F) + labs(x = "Exam Anxiety", y = "Exam Performance %") 
+scatter + geom_point() + geom_smooth(method = "lm", colour = "Blue", se = F) + labs(x = "Exam Anxiety", y = "Exam Performance %") 
 
 
 #Simple scatter with regression line(red)+ CI
@@ -64,11 +65,11 @@ scatter + geom_point() + geom_smooth(method = "lm", aes(fill = Gender), alpha = 
 
 
 
-##(ÇÐ»ý½Ç½À°úÁ¦)
-##"FacebookNarcissism.dat" ÀÚ·á·Î NPQC_R_Total(XÃà), Rating(yÃà)ÀÇ »êÆ÷µµ ±×¸®±â
-## 1) »êÆ÷µµ ±×¸®±â(Rating_Type¿¡ µû¶ó »ö»ó ´Ù¸£°Ô)
-## 2) »êÆ÷µµ¿Í ÇÔ²² È¸±Í¼± ±×¸®±â(Rating_Type¿¡ µû¶ó È¸±Í¼± »ö»ó ´Ù¸£°Ô, method´Â lmÀ¸·Î)
-## 3) ±×¸² titleÀº "geom_smooth(aes(colour = Rating_Type))" À¸·Î Á¦½Ã
+##(?Ð»??Ç½ï¿½ï¿½?ï¿½ï¿½)
+##"FacebookNarcissism.dat" ?Ú·??? NPQC_R_Total(X??), Rating(y??)?? ?????? ?×¸???
+## 1) ?????? ?×¸???(Rating_Type?? ???? ???? ?Ù¸???)
+## 2) ???????? ?Ô²? È¸?Í¼? ?×¸???(Rating_Type?? ???? È¸?Í¼? ???? ?Ù¸???, method?? lmï¿½ï¿½??)
+## 3) ?×¸? titleï¿½ï¿½ "geom_smooth(aes(colour = Rating_Type))" ï¿½ï¿½?? ï¿½ï¿½??
 
 
 
@@ -81,12 +82,12 @@ festivalData <- read.delim("DownloadFestival.dat",  header = TRUE)
 festivalHistogram <- ggplot(festivalData, aes(day1)) + labs(legend.position="none")
 festivalHistogram + geom_histogram(binwidth = 0.4) + labs(x = "Hygiene (Day 1 of Festival)", y = "Frequency")
 
-#Locate outlier(Ãß°¡)
+#Locate outlier(?ß°?)
 
 festivalData<-festivalData[order(festivalData$day1),]
 
 
-#Density without outlier(Ãß°¡)
+#Density without outlier(?ß°?)
 
 festivalData2 = read.delim("DownloadFestival(No Outlier).dat",  header = TRUE)
 
@@ -108,7 +109,7 @@ festivalBoxplot2 <- ggplot(festivalData2, aes(gender, day1))
 festivalBoxplot2 + geom_boxplot() + labs(x = "Gender", y = "Hygiene (Day 1 of Festival)")
 
 
-##(ÇÐ»ý½Ç½À°úÁ¦) days 2 and 3 °¢°¢ box plot ±×·Áº¸±â##
+##(?Ð»??Ç½ï¿½ï¿½?ï¿½ï¿½) days 2 and 3 ???? box plot ?×·ï¿½ï¿½???##
 
 
 
@@ -126,7 +127,7 @@ bar + stat_summary(fun.y = mean, geom = "bar", position="dodge") + stat_summary(
 bar <- ggplot(chickFlick, aes(film, arousal, fill = film))
 bar + stat_summary(fun.y = mean, geom = "bar") + stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = 0.2) + facet_wrap(~gender) + labs(x = "Film", y = "Mean Arousal") + theme(legend.position="none")
 
-## ±×¸² »ö»ó ´Ù¸£°Ô!
+## ?×¸? ???? ?Ù¸???!
 bar+ stat_summary(fun.y = mean, geom = "bar") + scale_fill_manual(values=c("black", "white"))
 
 levels(chickFlick$film)
@@ -144,9 +145,9 @@ scatter + geom_point() + scale_colour_brewer(palette="Paired")
 scatter + geom_point() + scale_colour_brewer(palette="Oranges")
 
 
-##(ÇÐ»ý½Ç½À°úÁ¦) chickFlick ÀÚ·á, xÃà film, yÃà arousal.
-### 1) ¸·´ë ±×·¡ÇÁ(¸·³» ³»ºÎ´Â Èò»ö, Å×µÎ¸®´Â °ËÀº»ö) + ¿ÀÂ÷ ¸·´ë errorbar ÇüÅÂ, mean_cl_normal·Î ¿ÀÂ÷ Ç¥Çö, ¿ÀÂ÷¸·´ë »¡°£»ö»óÀ¸·Î, ³Êºñ´Â 0.2)
-### 2) ¸·´ë ±×·¡ÇÁ(¸·³» ³»ºÎ´Â Èò»ö, Å×µÎ¸®´Â °ËÀº»ö) + ¿ÀÂ÷ ¸·´ë errorbar ÇüÅÂ, mean_cl_boot·Î ¿ÀÂ÷ Ç¥Çö, ¿ÀÂ÷¸·´ë »¡°£»ö»óÀ¸·Î, ³Êºñ´Â 0.2)
+##(?Ð»??Ç½ï¿½ï¿½?ï¿½ï¿½) chickFlick ?Ú·?, x?? film, y?? arousal.
+### 1) ???? ?×·???(???? ???Î´? ????, ?×µÎ¸??? ??ï¿½ï¿½??) + ???? ???? errorbar ????, mean_cl_normal?? ???? Ç¥??, ???????? ????????ï¿½ï¿½??, ?Êº??? 0.2)
+### 2) ???? ?×·???(???? ???Î´? ????, ?×µÎ¸??? ??ï¿½ï¿½??) + ???? ???? errorbar ????, mean_cl_boot?? ???? Ç¥??, ???????? ????????ï¿½ï¿½??, ?Êº??? 0.2)
 
 
 
@@ -165,7 +166,7 @@ hiccups$Intervention_Factor<-factor(hiccups$Intervention, levels(hiccups$Interve
 line <- ggplot(hiccups,  aes(Intervention_Factor, Hiccups))
 line + stat_summary(fun.y = mean, geom = "point") + stat_summary(fun.y = mean, geom = "line", aes(group = 1),colour = "Red", linetype = "dashed") + stat_summary(fun.data = mean_cl_boot, geom = "errorbar", width = 0.2) + labs(x = "Intervention", y = "Mean Number of Hiccups")
 
-## textdata·Î Ãß°¡ ½Ç¤µ
+## textdata?? ?ß°? ?Ç¤?
 
 textData <- read.delim("TextMessages.dat",  header = TRUE)
 textData$id = row(textData[1])
@@ -178,18 +179,18 @@ textMessages$Time<-factor(textMessages$Time, labels = c("Baseline", "6 Months"))
 
 print (textMessages)
 
-## group¿¡ µû¶ó ¼±À» ´Ù¸£°Ô ±×¸²
+## group?? ???? ??ï¿½ï¿½ ?Ù¸??? ?×¸?
 
 line <- ggplot(textMessages, aes(Time, Grammar_Score, colour = Group))
 line + stat_summary(fun.y = mean, geom = "point") + stat_summary(fun.y = mean, geom = "line", aes(group= Group)) + stat_summary(fun.data = mean_cl_boot, geom = "errorbar", width = 0.2) + labs(x = "Time", y = "Mean Grammar Score", colour = "Group") 
 
 
-## (ÇÐ»ý½Ç½À°úÁ¦) textMessages°´Ã¼ÀÇ Time(x), Grammar_Score(y), ÀÚ·á »ö»óÀº Group¿¡ µû¶ó ´Ù¸£°Ô Ç¥Çö
-## 1) X¿¡ µû¸¥ Y°ªÀÇ Æò±ÕÀ» Á¡À¸·Î Ç¥Çö(GROUP¿¡ µû¶ó Á¡ÀÇ ¸ð¾ç ´Ù¸£°Ô, Á¡ÀÇ Å©±â´Â 4)
- ## *** Á¡ÀÇ ¸ð¾ç ´Ù¸£°Ô ÇÏ´Â ¿É¼Ç : aes(shape=Group)
-## 2) X¿¡ µû¸¥ y°ªÀÇ Æò±Õ »çÀÌ¸¦ ¼±À¸·Î ÀÌÀ½ : Group º¯¼ö¿¡ µû¶ó ¼­·Î ´Ù¸¥ ¼±µéÀÌ ±×·ÁÁöµµ·Ï, ¼± À¯Çüµµ group¿¡ µû¶ó ´Ù¸£°Ô,
-## 3) ¿ÀÂ÷ ¸·´ë Ç¥(mean_cl_boot), ³Êºñ´Â 0.2
+## (?Ð»??Ç½ï¿½ï¿½?ï¿½ï¿½) textMessages??Ã¼?? Time(x), Grammar_Score(y), ?Ú·? ????ï¿½ï¿½ Group?? ???? ?Ù¸??? Ç¥??
+## 1) X?? ???? Y???? ????ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½?? Ç¥??(GROUP?? ???? ï¿½ï¿½?? ???? ?Ù¸???, ï¿½ï¿½?? Å©???? 4)
+ ## *** ï¿½ï¿½?? ???? ?Ù¸??? ?Ï´? ?É¼? : aes(shape=Group)
+## 2) X?? ???? y???? ???? ???Ì¸? ??ï¿½ï¿½?? ??ï¿½ï¿½ : Group ?????? ???? ???? ?Ù¸? ?????? ?×·???????, ?? ï¿½ï¿½???? group?? ???? ?Ù¸???,
+## 3) ???? ???? Ç¥(mean_cl_boot), ?Êº??? 0.2
 
-## 1) + 2) + 3) ÇÕÃÄ¼­ ±×¸² ±×¸®±â
+## 1) + 2) + 3) ???Ä¼? ?×¸? ?×¸???
 
 
