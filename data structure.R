@@ -151,7 +151,7 @@ mean(bts$na,na.rm = TRUE)
 
 bts[1,4]<-NA    #대괄호는 indexing, [row, column] 순서를 기억하자
 mean(bts$age)
-mean(bts$na, na.rm=TRUE)
+mean(bts$age, na.rm=TRUE)
 bts
 
 
