@@ -45,7 +45,7 @@ head(mlChat, 10)
 ##기존 lm이나 glm에 비해 "relevel"을 해야 한다는 특징
 ##기저범주 설정하기: 무반응"No response/Walk off"
 ##예측변수 결정하기: 기존 예측변수들 + 성적 농담과 성별의 상호작용 + 유머와 성별의 상호작용
-chatModel <- mlogit(Success ~ 1 | Good_Mate + Funny + Gender + Sex + Gender:Sex + Funny:Gender, data = mlChat, reflevel = "No response/Walk Off")
+chatModel <- mlogit(Success ~ 1 | Good_Mate + Funny + Gender + Sex + Funny:Gender + Sex:Gender, data = mlChat, reflevel = "No response/Walk Off")
 summary(chatModel)
 
 ##-------회귀모형 해석하기
@@ -64,18 +64,12 @@ exp(confint(chatModel))
 ##-------전화번호를 얻을 확률은 어떻게 변화할까
 ##3. Good_Mate:Get Phone Number
 ##no response와 get phone number를 유의미하게 예측(b=0.13, p<0.05)
-##승산비는 Good_Mate 점수가 1점 올라갈 때 무응답에 비해 전화번호를 얻을 확률이 1.14 높아짐
+##Odds Ratio는 Good_Mate 점수가 1점 올라갈 때 무응답에 비해 전화번호를 얻을 확률이 1.14 높아짐
 ##7. GenderFemale:Get Phone Number
 ##no response와 get phone number를 유의미하게 예측(b=-0.165, p<0.05)
-##승산비는 남성(0)에서 여성(1)으로 변화함에 따라 전화번호를 얻을 확률이 0.19 높아짐
+##Odds Ratio는 남성(0)에서 여성(1)으로 변화함에 따라 전화번호를 얻을 확률이 0.19 높아짐
 ##9. Sex:Get Phone Number
 ##no response와 get phone number를 유의미하게 예측(b=0.28, p<0.01)
-##승산비는 sex 점수가 1점 올라갈 때 전화번호를 얻을 확률이 1.32 높아짐
-##11. GenderFemale:sex:Get Phone Number
-##no response와 get phone number를 유의미하게 예측(b=-0.35 p<0.001)
-##승산비는 성별과 sex 점수가 변화할 때 전화번호를 얻을 확률이 0.71 높아짐
-##13. GenderFemale:Funny:Get Phone Number  
-##no response와 get phone number를 유의미하게 예측(b=0.49, p<0.01)
-##승산비는 성별과 Funny 점수가 변화할 때 전화번호를 얻을 확률이 1.64 높아짐
+##Odds Ratio는 sex 점수가 1점 올라갈 때 전화번호를 얻을 확률이 1.32 높아짐
 
               
