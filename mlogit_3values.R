@@ -72,6 +72,8 @@ exp(chatModel$coefficients)
 data.frame(exp(chatModel$coefficients))
 exp(confint(chatModel))
 
+** 신뢰구간이 1을 포함한다면 모델은 유의하지 않다
+
 ##-------3. Good_Mate:Get Phone Number
 ##no response와 get phone number를 유의미하게 예측(b=0.13, p<0.05)
 exp(0.13)
