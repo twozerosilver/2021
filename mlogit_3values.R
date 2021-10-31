@@ -17,8 +17,8 @@ chatData<-read.delim("Chat-Up Lines2.dat", header = TRUE)
 
 ##-------데이터를 확인하기
 ##텍스트 문자열이 포함되어 있으므로 요인여부 확인하고, 필요 시 요인으로 변환하기
-##해석을 고려하여 기저범주 설정하기: 현재는 Female이 기저범주. 
-##여성에 대한 작업멘트의 성공 여부가 궁금하다면 기저범주는 male로 두어야 함
+##해석을 고려하여 기저범주 설정하기: 현재는 Female이 참조범주. 
+##여성에 대한 작업멘트의 성공 여부가 궁금하다면 참조범주는 Male로 두어야 함
 
 is.na(chatData)
 sum(is.na(chatData))
@@ -43,12 +43,12 @@ levels(chatData$Gender)
 ##-------기존의 데이터를 mlogit에 적정한 형태로 바꾸기
 ##newDataframe<-mlogit.data(oldDataFrame, choice = "text", shape = "wide"/"long")
 ##long layout: 1행 1 관측치, wide layout: 1행 여러 데이터
-##각 행이 3가지 종속변수(Success)에 대응하여 분리됨
+##각 행이 종속변수(Success)에 대응하여 분리됨
 mlChat <- mlogit.data(chatData, choice="Success", shape="wide")
 head(mlChat, 10)
 
 ##-------다항 로지스틱 회귀분석 모델 만들기
-##newDataframe<-mlogit.data(결과변수~예측변수, data = 데이터프레임, na.action = 결측값 처리방식, relevel = 결과 기저 범주 번호)
+##newDataframe<-mlogit.data(결과변수~예측변수, data = 데이터프레임, na.action = 결측값 처리방식, reflevel = 결과 참조 범주 번호)
 ##기존 lm이나 glm에 비해 "reflevel"을 해야 한다는 특징
 ##기저범주 설정하기: No response/Walk off
 ##예측변수 결정하기: Good_Mate, Funny, Sexual
