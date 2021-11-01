@@ -55,10 +55,12 @@ head(mlChat, 10)
 chatModel <- mlogit(Success ~ 1 | Good_Mate + Funny + Sexual + Gender, data = mlChat, reflevel = "No response/Walk Off")
 summary(chatModel)
 
-##-------회귀모형 해석하기
+##-------회귀모형의 설명력 확인하기
+##-------우도비를 활용해서 검증하기
 chatBase <- mlogit(Success ~ 1, data = mlChat, reflevel = "No response/Walk Off")
 summary(chatBase)
 
+##-2LL (+ 내용 추가하기)
 ##chatBase의 Log-Likelihood: Log-Likelihood: -1008 / chatModel은 Log-Likelihood: -892.02
 1008-892.02
 (1008-892.02)*-2
@@ -72,8 +74,10 @@ exp(chatModel$coefficients)
 data.frame(exp(chatModel$coefficients))
 exp(confint(chatModel))
 
-** 신뢰구간이 1을 포함한다면 모델은 유의하지 않다
+## 신뢰구간의 확인
+## 유의한 결과가 나왔다면 신뢰구간 내 1이 포함되지 않음, 유의하지 않은 결과가 나왔다면 1이 포함
 
+## 회귀모형 결과 해석하기
 ##-------3. Good_Mate:Get Phone Number
 ##no response와 get phone number를 유의미하게 예측(b=0.13, p<0.05)
 exp(0.13)
