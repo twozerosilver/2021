@@ -118,7 +118,9 @@ exp(0.49)
 exp(-1.99)
 ##Odds Ratio는 남성(0)보다 여성(1)일 때 전화번호를 얻을 확률이 0.14 정도
 
-apply(fitted(m, outcome = FALSE), 2, mean)
+##------종속변수 확률 구하기
+apply(fitted(chatModel, outcome = FALSE), 2, mean)
+
 ##------성별에 따른 예측값의 변화(나머지는 평균일 때)
 FtoM <- data.frame(Gender = c("Female", "Male"), 
                     Sexual = mean(chatData$Sexual), 
