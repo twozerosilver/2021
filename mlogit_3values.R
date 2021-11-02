@@ -1,10 +1,10 @@
 ##-------다항 로지스틱 회귀분석 R 실습
-##-------앤디 필드의 유쾌한 R 통계학(2019)
 ##-------'작업 멘트'를 평가하는 방식에 관한 연구에서 mlogit으로 분석하기
 
 ##-------패키지 설치하기
 install.packages("car")
 install.packages("mlogit")
+install.packages("dfidx")
 
 library(car)
 library(mlogit)
@@ -17,13 +17,13 @@ chatData<-read.delim("Chat-Up Lines2.dat", header = TRUE)
 
 ##-------데이터를 확인하기
 ##텍스트 문자열이 포함되어 있으므로 요인여부 확인하고, 필요 시 요인으로 변환하기
-##해석을 고려하여 기저범주 설정하기: 현재는 Female이 참조범주. 
+##해석을 고려하여 기저범주 설정하기: 현재는 Female이 참조범주
 ##여성에 대한 작업멘트의 성공 여부가 궁금하다면 참조범주는 Male로 두어야 함
+
+head(chatData, 10)
 
 is.na(chatData)
 sum(is.na(chatData))
-
-head(chatData, 10)
 
 is.factor(chatData$Success)
 is.factor(chatData$Gender)
@@ -56,11 +56,19 @@ chatModel <- mlogit(Success ~ 1 | Good_Mate + Funny + Sexual + Gender, data = ml
 summary(chatModel)
 
 ##-------회귀모형의 설명력 확인하기
-##-------우도비를 활용해서 검증하기
+##-------우도(LL) 통계량
+##우도 통계량은 모형이 적합된 후에도 설명되지 않은 정보의 양
+##우도 통계량 값이 크다 => 설명되지 않은 관측이 많다
+
 chatBase <- mlogit(Success ~ 1, data = mlChat, reflevel = "No response/Walk Off")
 summary(chatBase)
 
-##-2LL (+ 내용 추가하기)
+##-------이탈도 통계량
+##-------로지스틱 회귀모형 이탈도 = -2LL
+##-------우도비: X^=2LL(생성 모형)-2LL(기저 상태)
+##로지스틱 회귀모형을 기저 상태와 비교
+##이탈도는 카이제곱 분포를 따르므로 유의성을 계산하기 쉬움
+
 ##chatBase의 Log-Likelihood: Log-Likelihood: -1008 / chatModel은 Log-Likelihood: -892.02
 1008-892.02
 (1008-892.02)*-2
