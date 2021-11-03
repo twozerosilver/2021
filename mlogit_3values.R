@@ -104,22 +104,11 @@ exp(-1.99)
 ##Odds Ratio는 남성(0)보다 여성(1)일 때 전화번호를 얻을 확률이 0.14 정도
 ##여성보다 남성일 때 전화번호를 얻을 확률이 614.29% 증가
 
-##------발생 확률 구하기
-head(fitted(chatModel, outcome = FALSE))
-apply(fitted(chatModel, outcome = FALSE), 2, mean)
-
-predict(chatModel, newdata=test1 , type="response")
-test1 <- data.frame(Gender = c("Female", "Male"), 
-                   Sexual = mean(chatData$Sexual), 
-                   Good_Mate = mean(chatData$Good_Mate), 
-                   Funny = mean(chatData$Funny))
-test1.pre <- predict(mlChat, newdata = test1, type = "response")
 
 ##-------[참고] nnet_multinom 활용
 ##다항 로짓스틱 회귀분석 모델 만들기
 ##newDataframe<-multinom(결과변수~예측변수, data = 본 데이터)
-chatModel2 <- multinom(Success ~ 
-                         Good_Mate + Funny + Sexual + Gender, data = chatData)
+chatModel2 <- multinom(Success ~ Good_Mate + Funny + Sexual + Gender, data = chatData)
 summary(chatModel2)
 exp(coef(chatModel2))
 ##변수의 유의성 검정(Z검정)
@@ -128,9 +117,9 @@ z
 p <- (1 - pnorm(abs(z), 0, 1)) * 2
 p
 ##성별에 따른 예측값의 변화
-FtoM <- data.frame(Gender = c("Female", "Male"), 
+test2 <- data.frame(Gender = c("Male", "Female"), 
                    Sexual = mean(chatData$Sexual), 
                    Good_Mate = mean(chatData$Good_Mate), 
                    Funny = mean(chatData$Funny))
-FtoM
-predict(chatModel2, newdata = FtoM, "probs")
+test2
+predict(chatModel2, newdata = test2, "probs")
