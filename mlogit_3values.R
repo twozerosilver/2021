@@ -84,26 +84,6 @@ summary(chatBase)
 lrtest(chatModel, chatBase)
 waldtest(chatModel,chatBase)
 
-##-------[참고] nnet_multinom 활용
-##다항 로짓스틱 회귀분석 모델 만들기
-##newDataframe<-multinom(결과변수~예측변수, data = 본 데이터)
-chatModel2 <- multinom(Success ~ 
-                         Good_Mate + Funny + Sexual + Gender, data = chatData)
-summary(chatModel2)
-exp(coef(chatModel2))
-##변수의 유의성 검정(Z검정)
-z <- summary(chatModel2)$coefficients/summary(chatModel2)$standard.errors
-z
-p <- (1 - pnorm(abs(z), 0, 1)) * 2
-p
-##성별에 따른 예측값의 변화
-FtoM <- data.frame(Gender = c("Female", "Male"), 
-                   Sexual = mean(chatData$Sexual), 
-                   Good_Mate = mean(chatData$Good_Mate), 
-                   Funny = mean(chatData$Funny))
-FtoM
-predict(chatModel2, newdata = FtoM, "probs")
-
 ##-------전화번호를 얻을 확률은 어떻게 변화할까
 exp(chatModel$coefficients)
 data.frame(exp(chatModel$coefficients))
@@ -127,25 +107,30 @@ exp(-1.99)
 ##------발생 확률 구하기
 head(fitted(chatModel, outcome = FALSE))
 apply(fitted(chatModel, outcome = FALSE), 2, mean)
-predict(mlChat, newdata=test1 , type="response")
+
+predict(chatModel, newdata=test1 , type="response")
 test1 <- data.frame(Gender = c("Female", "Male"), 
                    Sexual = mean(chatData$Sexual), 
                    Good_Mate = mean(chatData$Good_Mate), 
                    Funny = mean(chatData$Funny))
 test1.pre <- predict(mlChat, newdata = test1, type = "response")
-predic
 
-##------mlogit: 조건별 확률 구하기
-newdata1 <- with(mydata, data.frame(gre = mean(gre), gpa = mean(gpa), 
-                                    rank = factor(1:4)))
-newdata1$rankP <- predict(mylogit, newdata = newdata1, type = "response")
-
-FtoM <- with(chatData, data.frame(Gender = c("Female", "Male"), 
-                                  Sexual = mean(Sexual), 
-                                  Good_Mate = mean(Good_Mate), 
-                                  Funny = mean(Funny)))
+##-------[참고] nnet_multinom 활용
+##다항 로짓스틱 회귀분석 모델 만들기
+##newDataframe<-multinom(결과변수~예측변수, data = 본 데이터)
+chatModel2 <- multinom(Success ~ 
+                         Good_Mate + Funny + Sexual + Gender, data = chatData)
+summary(chatModel2)
+exp(coef(chatModel2))
+##변수의 유의성 검정(Z검정)
+z <- summary(chatModel2)$coefficients/summary(chatModel2)$standard.errors
+z
+p <- (1 - pnorm(abs(z), 0, 1)) * 2
+p
+##성별에 따른 예측값의 변화
+FtoM <- data.frame(Gender = c("Female", "Male"), 
+                   Sexual = mean(chatData$Sexual), 
+                   Good_Mate = mean(chatData$Good_Mate), 
+                   Funny = mean(chatData$Funny))
 FtoM
-FtoM <- predict(chatModel, newdata = FtoM, type = "Success")
-
-
-
+predict(chatModel2, newdata = FtoM, "probs")
