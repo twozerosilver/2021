@@ -1,0 +1,19 @@
+SET DECIMAL=DOT.
+
+DATA LIST FILE= "data_spss2.dat"  free (",")
+ENCODING="Locale"
+/ names (A8) score score2 * edu (A9) employment (A10) type 
+  .
+
+VARIABLE LABELS
+names "names" 
+ score "score" 
+ score2 "score2" 
+ edu "edu" 
+ employment "employment" 
+ type "type" 
+ .
+VARIABLE LEVEL score, score2, type 
+ (scale).
+
+EXECUTE.
